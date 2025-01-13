@@ -42,5 +42,6 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation("com.tfandkusu.ga913flutter:flutter_debug:1.0")
     testImplementation(libs.junit)
 }
