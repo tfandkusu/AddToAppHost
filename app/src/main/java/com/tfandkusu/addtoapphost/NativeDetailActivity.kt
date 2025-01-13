@@ -5,6 +5,9 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.embedding.engine.FlutterEngineCache
+import io.flutter.plugin.common.MethodChannel
 
 class NativeDetailActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
@@ -19,6 +22,15 @@ class NativeDetailActivity : AppCompatActivity() {
 
         val button = findViewById<android.widget.Button>(R.id.startFlutter)
         button.setOnClickListener {
+            val flutterEngine = FlutterEngineCache
+                .getInstance().get(MyApplication.FLUTTER_ENGINE_ID)
+            if (flutterEngine != null) {
+                val methodChannel = MethodChannel(
+                    flutterEngine.dartExecutor.binaryMessenger,
+                    "com.tfandkusu.ga913flutter"
+                )
+                methodChannel.invokeMethod("navigateToDetail", mapOf("id" to id))
+            }
             val intent = FlutterActivity.withCachedEngine(
                 MyApplication.FLUTTER_ENGINE_ID
             ).build(this)
