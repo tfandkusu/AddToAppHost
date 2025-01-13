@@ -1,6 +1,7 @@
 package com.tfandkusu.addtoapphost
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -31,9 +32,7 @@ class NativeDetailActivity : AppCompatActivity() {
                 )
                 methodChannel.invokeMethod("navigateToDetail", mapOf("id" to id))
             }
-            val intent = FlutterActivity.withCachedEngine(
-                MyApplication.FLUTTER_ENGINE_ID
-            ).build(this)
+            val intent = Intent(this, SecondFlutterActivity::class.java)
             startActivity(intent)
         }
     }

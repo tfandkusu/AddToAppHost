@@ -8,6 +8,15 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        app:title="@string/main_activity_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
     <Button
         android:id="@+id/startFlutter"
         android:layout_width="wrap_content"
