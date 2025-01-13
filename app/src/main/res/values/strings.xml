@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">AddToAppHost</string>
     <string name="start_flutter">Start Flutter</string>
+    <string name="native_detail_activity_title">Native Activity</string>
 </resources>
