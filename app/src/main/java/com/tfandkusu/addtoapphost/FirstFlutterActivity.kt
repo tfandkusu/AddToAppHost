@@ -1,6 +1,6 @@
 package com.tfandkusu.addtoapphost
 
-import android.util.Log
+import android.content.Intent
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -14,7 +14,10 @@ class FirstFlutterActivity : FlutterActivity() {
         ).setMethodCallHandler { call, result ->
             if (call.method == "navigateToDetail") {
                 call.argument<Int>("id")?.let {
-                    Log.d("Takada", "id = $it")
+                    val intent = Intent(this, NativeDetailActivity::class.java)
+                    intent.putExtra(NativeDetailActivity.EXTRA_ID, it)
+                    startActivity(intent)
+                    result.success(null)
                 }
             }
         }
