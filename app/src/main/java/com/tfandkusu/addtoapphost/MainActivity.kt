@@ -30,24 +30,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, FirstFlutterActivity::class.java)
             startActivityForResult(intent, 0)
         }
-        val flutterEngine = FlutterEngineCache
-            .getInstance().get(MyApplication.FLUTTER_ENGINE_ID)
-        if (flutterEngine != null) {
-            MethodChannel(
-                flutterEngine.dartExecutor.binaryMessenger,
-                "com.tfandkusu.ga913flutter"
-            ).setMethodCallHandler { call, result ->
-                if (call.method == "navigateToDetail") {
-                    call.argument<Int>("id")?.let {
-                        Log.d("Takada","navigateToDetail")
-                        val intent = Intent(this, NativeDetailActivity::class.java)
-                        intent.putExtra(NativeDetailActivity.EXTRA_ID, it)
-                        startActivity(intent)
-                        result.success(null)
-                    }
-                }
-            }
-        }
         FlutterHandler.mainFlutterFragmentAttach.observeForever(observer)
     }
 
@@ -58,9 +40,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun attachFlutterFragment() {
         Log.d("Takada", "attachFlutterFragment")
-        val flutterFragment1 = FlutterFragment.withCachedEngine(
-            MyApplication.FLUTTER_ENGINE_ID
-        ).build<FlutterFragment>()
+        val flutterFragment1 = FirstFlutterFragment()
         supportFragmentManager.beginTransaction()
             .replace(R.id.flutterFragment1, flutterFragment1)
             .commitAllowingStateLoss()
