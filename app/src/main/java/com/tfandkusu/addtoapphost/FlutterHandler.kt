@@ -7,11 +7,11 @@ object FlutterHandler {
     private val _mainFlutterFragmentAttach =  MutableLiveData(true)
     val mainFlutterFragmentAttach: LiveData<Boolean> = _mainFlutterFragmentAttach
 
-    fun onCallFlutterActivity() {
+    fun onCreateFlutterActivity() {
         _mainFlutterFragmentAttach.value = false
     }
 
-    fun onCloseFlutterActivity() {
+    fun onDestroyFlutterActivity() {
         _mainFlutterFragmentAttach.value = true
     }
 }

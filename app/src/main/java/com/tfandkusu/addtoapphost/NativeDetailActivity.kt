@@ -22,7 +22,6 @@ class NativeDetailActivity : AppCompatActivity() {
 
         val button = findViewById<android.widget.Button>(R.id.startFlutter)
         button.setOnClickListener {
-            FlutterHandler.onCallFlutterActivity()
             val flutterEngine = FlutterEngineCache
                 .getInstance().get(MyApplication.FLUTTER_ENGINE_ID)
             if (flutterEngine != null) {
@@ -33,18 +32,10 @@ class NativeDetailActivity : AppCompatActivity() {
                 methodChannel.invokeMethod("navigateToDetail", mapOf("id" to id))
             }
             val intent = Intent(this, SecondFlutterActivity::class.java)
-            startActivityForResult(intent, 0)
+            startActivity(intent)
         }
     }
 
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?,
-        caller: ComponentCaller
-    ) {
-        FlutterHandler.onCloseFlutterActivity()
-    }
 
     companion object {
         const val EXTRA_ID = "id"
