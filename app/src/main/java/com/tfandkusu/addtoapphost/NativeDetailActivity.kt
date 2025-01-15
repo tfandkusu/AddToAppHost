@@ -1,12 +1,11 @@
 package com.tfandkusu.addtoapphost
 
 import android.annotation.SuppressLint
+import android.app.ComponentCaller
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import io.flutter.embedding.android.FlutterActivity
-import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.plugin.common.MethodChannel
 
@@ -23,6 +22,7 @@ class NativeDetailActivity : AppCompatActivity() {
 
         val button = findViewById<android.widget.Button>(R.id.startFlutter)
         button.setOnClickListener {
+            FlutterHandler.onCallFlutterActivity()
             val flutterEngine = FlutterEngineCache
                 .getInstance().get(MyApplication.FLUTTER_ENGINE_ID)
             if (flutterEngine != null) {
@@ -33,8 +33,17 @@ class NativeDetailActivity : AppCompatActivity() {
                 methodChannel.invokeMethod("navigateToDetail", mapOf("id" to id))
             }
             val intent = Intent(this, SecondFlutterActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, 0)
         }
+    }
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?,
+        caller: ComponentCaller
+    ) {
+        FlutterHandler.onCloseFlutterActivity()
     }
 
     companion object {
