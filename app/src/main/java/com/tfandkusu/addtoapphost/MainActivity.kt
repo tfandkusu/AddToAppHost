@@ -4,12 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.FrameLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
-import io.flutter.embedding.android.FlutterFragment
-import io.flutter.embedding.engine.FlutterEngineCache
-import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,12 +24,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+        FlutterHandler.mainFlutterFragmentAttach.observeForever(observer)
         val startFlutter = findViewById<Button>(R.id.startFlutter)
         startFlutter.setOnClickListener {
             val intent = Intent(this, FirstFlutterActivity::class.java)
             startActivityForResult(intent, 0)
         }
-        FlutterHandler.mainFlutterFragmentAttach.observeForever(observer)
+        val hideFlutter = findViewById<Button>(R.id.showHideFlutter)
+        hideFlutter.setOnClickListener {
+            val frame = findViewById<FrameLayout>(R.id.flutterFragment1)
+            frame.isVisible = !frame.isVisible
+        }
     }
 
     override fun onDestroy() {
