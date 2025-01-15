@@ -7,7 +7,7 @@ import io.flutter.plugin.common.MethodChannel
 class SecondFlutterActivity : FlutterActivity() {
 
     override fun getCachedEngineId(): String {
-        return MyApplication.FLUTTER_ENGINE_ID
+        return MyApplication.FLUTTER_ENGINE_ID_1
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {

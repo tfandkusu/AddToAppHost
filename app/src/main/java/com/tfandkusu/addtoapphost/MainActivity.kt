@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         }
         if (true) {
             val flutterEngine = FlutterEngineCache
-                .getInstance().get(MyApplication.FLUTTER_ENGINE_ID)
+                .getInstance().get(MyApplication.FLUTTER_ENGINE_ID_1)
             if (flutterEngine != null) {
                 MethodChannel(
                     flutterEngine.dartExecutor.binaryMessenger,
@@ -53,14 +53,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addFlutterFragment() {
-        var flutterFragment1 = FlutterFragment.withCachedEngine(
-            MyApplication.FLUTTER_ENGINE_ID
+        val flutterFragment1 = FlutterFragment.withCachedEngine(
+            MyApplication.FLUTTER_ENGINE_ID_1
         ).build<FlutterFragment>()
         supportFragmentManager.beginTransaction()
             .replace(R.id.flutterFragment1, flutterFragment1)
             .commit()
-        var flutterFragment2 = FlutterFragment.withCachedEngine(
-            MyApplication.FLUTTER_ENGINE_ID
+        val flutterFragment2 = FlutterFragment.withCachedEngine(
+            MyApplication.FLUTTER_ENGINE_ID_2
         ).build<FlutterFragment>()
         supportFragmentManager.beginTransaction()
             .replace(R.id.flutterFragment2, flutterFragment2)
