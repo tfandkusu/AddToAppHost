@@ -6,11 +6,22 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.Observer
 import io.flutter.embedding.android.FlutterFragment
 import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : AppCompatActivity() {
+
+    private val observer: Observer<Boolean> = Observer { attach ->
+        if (attach) {
+            attachFlutterFragment()
+        } else {
+            detachFlutterFragment()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -32,47 +43,33 @@ class MainActivity : AppCompatActivity() {
                         call.argument<Int>("id")?.let {
                             val intent = Intent(this, NativeDetailActivity::class.java)
                             intent.putExtra(NativeDetailActivity.EXTRA_ID, it)
-                            startActivityForResult(intent, 0)
-                            // removeFlutterFragment()
+                            startActivity(intent)
                             result.success(null)
                         }
                     }
                 }
             }
-            addFlutterFragment()
         }
+        FlutterHandler.mainFlutterFragmentAttach.observeForever(observer)
     }
 
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?,
-        caller: ComponentCaller
-    ) {
-        // addFlutterFragment()
+    override fun onDestroy() {
+        super.onDestroy()
+        FlutterHandler.mainFlutterFragmentAttach.removeObserver(observer)
     }
 
-    private fun addFlutterFragment() {
-        var flutterFragment1 = FlutterFragment.withCachedEngine(
+    private fun attachFlutterFragment() {
+        val flutterFragment1 = FlutterFragment.withCachedEngine(
             MyApplication.FLUTTER_ENGINE_ID
         ).build<FlutterFragment>()
         supportFragmentManager.beginTransaction()
             .replace(R.id.flutterFragment1, flutterFragment1)
             .commit()
-        var flutterFragment2 = FlutterFragment.withCachedEngine(
-            MyApplication.FLUTTER_ENGINE_ID
-        ).build<FlutterFragment>()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.flutterFragment2, flutterFragment2)
-            .commit()
     }
 
-    private fun removeFlutterFragment() {
+    private fun detachFlutterFragment() {
         supportFragmentManager.beginTransaction()
             .remove(supportFragmentManager.findFragmentById(R.id.flutterFragment1)!!)
-            .commit()
-        supportFragmentManager.beginTransaction()
-            .remove(supportFragmentManager.findFragmentById(R.id.flutterFragment2)!!)
             .commit()
     }
 }
