@@ -1,16 +1,26 @@
 package com.tfandkusu.addtoapphost
 
-import android.app.ComponentCaller
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import io.flutter.embedding.android.FlutterFragment
 import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : AppCompatActivity() {
+
+    private val observer: Observer<Boolean> = Observer { attach ->
+        if (attach) {
+            attachFlutterFragment()
+        } else {
+            detachFlutterFragment()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -20,59 +30,27 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, FirstFlutterActivity::class.java)
             startActivityForResult(intent, 0)
         }
-        if (true) {
-            val flutterEngine = FlutterEngineCache
-                .getInstance().get(MyApplication.FLUTTER_ENGINE_ID)
-            if (flutterEngine != null) {
-                MethodChannel(
-                    flutterEngine.dartExecutor.binaryMessenger,
-                    "com.tfandkusu.ga913flutter"
-                ).setMethodCallHandler { call, result ->
-                    if (call.method == "navigateToDetail") {
-                        call.argument<Int>("id")?.let {
-                            val intent = Intent(this, NativeDetailActivity::class.java)
-                            intent.putExtra(NativeDetailActivity.EXTRA_ID, it)
-                            startActivityForResult(intent, 0)
-                            // removeFlutterFragment()
-                            result.success(null)
-                        }
-                    }
-                }
-            }
-            addFlutterFragment()
-        }
+        FlutterHandler.mainFlutterFragmentAttach.observeForever(observer)
     }
 
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?,
-        caller: ComponentCaller
-    ) {
-        // addFlutterFragment()
+    override fun onDestroy() {
+        super.onDestroy()
+        FlutterHandler.mainFlutterFragmentAttach.removeObserver(observer)
     }
 
-    private fun addFlutterFragment() {
-        var flutterFragment1 = FlutterFragment.withCachedEngine(
-            MyApplication.FLUTTER_ENGINE_ID
-        ).build<FlutterFragment>()
+    private fun attachFlutterFragment() {
+        Log.d("Takada", "attachFlutterFragment")
+        val flutterFragment1 = FirstFlutterFragment()
         supportFragmentManager.beginTransaction()
             .replace(R.id.flutterFragment1, flutterFragment1)
-            .commit()
-        var flutterFragment2 = FlutterFragment.withCachedEngine(
-            MyApplication.FLUTTER_ENGINE_ID
-        ).build<FlutterFragment>()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.flutterFragment2, flutterFragment2)
-            .commit()
+            .commitAllowingStateLoss()
     }
 
-    private fun removeFlutterFragment() {
+    private fun detachFlutterFragment() {
+        Log.d("Takada", "detachFlutterFragment")
+        val flutterFragment1 = supportFragmentManager.findFragmentById(R.id.flutterFragment1)!!
         supportFragmentManager.beginTransaction()
-            .remove(supportFragmentManager.findFragmentById(R.id.flutterFragment1)!!)
-            .commit()
-        supportFragmentManager.beginTransaction()
-            .remove(supportFragmentManager.findFragmentById(R.id.flutterFragment2)!!)
-            .commit()
+            .remove(flutterFragment1)
+            .commitAllowingStateLoss()
     }
 }

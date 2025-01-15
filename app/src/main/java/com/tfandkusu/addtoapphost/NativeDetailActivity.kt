@@ -1,12 +1,11 @@
 package com.tfandkusu.addtoapphost
 
 import android.annotation.SuppressLint
+import android.app.ComponentCaller
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import io.flutter.embedding.android.FlutterActivity
-import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.plugin.common.MethodChannel
 
@@ -36,6 +35,7 @@ class NativeDetailActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
 
     companion object {
         const val EXTRA_ID = "id"

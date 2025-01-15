@@ -1,11 +1,12 @@
 package com.tfandkusu.addtoapphost
 
 import android.content.Intent
-import io.flutter.embedding.android.FlutterActivity
+import android.util.Log
+import io.flutter.embedding.android.FlutterFragment
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
-class FirstFlutterActivity : FlutterActivity() {
+class FirstFlutterFragment  : FlutterFragment() {
 
     override fun getCachedEngineId(): String {
         return MyApplication.FLUTTER_ENGINE_ID
@@ -19,7 +20,8 @@ class FirstFlutterActivity : FlutterActivity() {
         ).setMethodCallHandler { call, result ->
             if (call.method == "navigateToDetail") {
                 call.argument<Int>("id")?.let {
-                    val intent = Intent(this, NativeDetailActivity::class.java)
+                    Log.d("Takada","navigateToDetail")
+                    val intent = Intent(requireContext(), NativeDetailActivity::class.java)
                     intent.putExtra(NativeDetailActivity.EXTRA_ID, it)
                     startActivity(intent)
                     result.success(null)
