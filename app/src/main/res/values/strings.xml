@@ -4,6 +4,7 @@
     <string name="main_activity_placeholder_1">FlutterFragment placeholder 1</string>
     <string name="main_activity_placeholder_2">FlutterFragment placeholder 2</string>
     <string name="start_flutter">Start Flutter</string>
+    <string name="show_hide_flutter">Show / Hide Flutter</string>
     <string name="native_detail_activity_title">Native Activity 2</string>
     <string name="native_detail_activity_call_flutter">Call Flutter\'s detail screen</string>
 </resources>
