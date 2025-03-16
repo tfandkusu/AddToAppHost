@@ -1,23 +1,17 @@
 package com.tfandkusu.addtoapphost
 
 import android.app.Application
-import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.embedding.engine.FlutterEngineCache
-import io.flutter.embedding.engine.dart.DartExecutor
+import io.flutter.embedding.engine.FlutterEngineGroup
+import io.flutter.embedding.engine.FlutterEngineGroupCache
 
 class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        val flutterEngine = FlutterEngine(this)
-        flutterEngine.dartExecutor.executeDartEntrypoint(
-            DartExecutor.DartEntrypoint.createDefault()
-        )
-        FlutterEngineCache
-            .getInstance()
-            .put(FLUTTER_ENGINE_ID, flutterEngine)
+        val flutterEngineGroup = FlutterEngineGroup(this)
+        FlutterEngineGroupCache.getInstance().put(FLUTTER_ENGINE_GROUP_ID, flutterEngineGroup)
     }
 
     companion object {
-        const val FLUTTER_ENGINE_ID = "my_engine_id"
+        const val FLUTTER_ENGINE_GROUP_ID = "my_engine_group_id"
     }
 }
