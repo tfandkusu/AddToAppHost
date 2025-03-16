@@ -43,6 +43,6 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.flutter.debug)
+    implementation(libs.flutter.release)
     testImplementation(libs.junit)
 }
