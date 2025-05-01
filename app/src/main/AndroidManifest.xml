@@ -14,9 +14,6 @@
         android:name=".MyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".NativeDetailActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -34,17 +31,10 @@
             />
 
         <activity
-            android:name=".FirstFlutterActivity"
+            android:name=".MyFlutterActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize" />
-
-        <activity
-            android:name=".SecondFlutterActivity"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-            android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize" />
-
     </application>
 
 </manifest>
