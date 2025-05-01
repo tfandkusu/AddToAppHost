@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val startFlutter = findViewById<Button>(R.id.startFlutter)
         startFlutter.setOnClickListener {
-            val intent = FlutterActivity.NewEngineInGroupIntentBuilder(
+            val intent = FlutterFragmentActivity.NewEngineInGroupIntentBuilder(
                 MyFlutterActivity::class.java,
                 MyApplication.FLUTTER_ENGINE_GROUP_ID
             )

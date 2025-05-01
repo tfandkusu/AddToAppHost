@@ -1,7 +1,7 @@
 package com.tfandkusu.addtoapphost
 
-import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
 
-class MyFlutterActivity : FlutterActivity() {
+class MyFlutterActivity : FlutterFragmentActivity() {
 
 }
