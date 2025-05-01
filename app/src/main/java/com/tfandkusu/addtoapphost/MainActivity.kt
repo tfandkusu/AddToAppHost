@@ -1,6 +1,7 @@
 package com.tfandkusu.addtoapphost
 
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,10 @@ class MainActivity : AppCompatActivity() {
         startFlutter.setOnClickListener {
             callMyFlutterActivity()
         }
+        val fragment = MyFragment()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, fragment)
+            .commit()
     }
 
     private fun callMyFlutterActivity() {
