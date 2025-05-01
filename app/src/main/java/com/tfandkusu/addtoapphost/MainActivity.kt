@@ -14,12 +14,23 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val startFlutter = findViewById<Button>(R.id.startFlutter)
         startFlutter.setOnClickListener {
-            val intent = FlutterFragmentActivity.NewEngineInGroupIntentBuilder(
-                MyFlutterActivity::class.java,
-                MyApplication.FLUTTER_ENGINE_GROUP_ID
-            )
-                .build(this)
-            startActivity(intent)
+            callMyFlutterActivity()
         }
+    }
+
+    private fun callMyFlutterActivity() {
+        val intent = FlutterFragmentActivity.NewEngineInGroupIntentBuilder(
+            MyFlutterActivity::class.java,
+            MyApplication.FLUTTER_ENGINE_GROUP_ID
+        ).dartEntrypoint("main")
+            .build(this)
+        val entrypointArgs = listOf(
+            "--dart-define=FLAVOR=beta",
+        )
+        intent.putStringArrayListExtra(
+            MyFlutterActivity.DART_ENTRY_POINT_ARGS,
+            ArrayList(entrypointArgs)
+        )
+        startActivity(intent)
     }
 }
