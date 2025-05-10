@@ -6,4 +6,5 @@
     <string name="start_flutter">Start Flutter</string>
     <string name="native_detail_activity_title">Native Activity 2</string>
     <string name="native_detail_activity_call_flutter">Call Flutter\'s detail screen</string>
+    <string name="my_fragment_message">Hello I am Android Native Fragment</string>
 </resources>
